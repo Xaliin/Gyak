@@ -1,0 +1,124 @@
+﻿.table {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+
+
+
+
+
+.gamespace {
+    flex-shrink: 0;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 0,5px solid black;
+    border-radius: 45px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 18px;
+    box-shadow: gray -5px 5px 20px;
+    height: 660px;
+}
+
+.dhead {
+    display: flex;
+    gap: 10px;
+}
+.dheaditem {
+    border: 2px solid black;
+    border-radius: 45px;
+    background-color: ghostwhite;
+    width: 40px;
+    height: 40px;
+}
+
+.ditem {
+    border: 1px solid black;
+    border-radius: 45px;
+    background-color: ghostwhite;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+}
+
+.dbody {
+    display: flex;
+    flex-direction: column;
+}
+
+.dbodyitem {
+    display: flex;
+    gap: 10px;
+    margin-bottom: -10px;
+}
+
+.dfoot {
+    display: flex;
+    gap: 5px;
+}
+
+.dfootitem {
+    border: 2px solid black;
+    border-radius: 45px;
+    background-color: ghostwhite;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+.sidepart {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    border: 0,5px solid black;
+    border-radius: 30px;
+    box-shadow: gray 5px 5px 20px;
+    align-items: center;
+    padding: 10px 5px;
+    height: 660px;
+    justify-content: space-between;
+}
+
+.rowresult {
+    margin-top: -10px;
+}
+
+.pinpanel {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    width: fit-content;
+    gap: 3px;
+    padding: 8px 0;
+    margin-bottom: 4px;
+}
+
+.pin {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: ghostwhite;
+    width: 10px;
+    height: 10px;
+}
+
+button {
+    border: none;
+    border-radius: 20px;
+    background-color: lightblue;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 40px;
+    width: 70px;
+}

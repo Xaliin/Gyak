@@ -1,0 +1,60 @@
+﻿@page "/mastermind"
+<PageTitle>Mastermind</PageTitle>
+<h1>Mastermind</h1>
+<div class="table">
+	<div class="gamespace">
+		<section>
+			<div class="dhead">
+				@for (int i = 0; i < 4; i++)
+				{
+					<div class="dheaditem"></div>
+				}
+			</div>
+		</section>
+		<br />
+		<section>
+			<div class="dbody">
+				@for (int i = 0; i < 11; i++)
+				{
+					<div class="dbodyitem"> 
+						@for (int j = 0; j < 4; j++)
+						{
+							<div class="ditem"></div>
+						}
+					</div>
+					<br />
+				}
+			</div>
+		</section>
+		<br />
+		<section>
+			<div class="dfoot">
+				@for (int i = 0; i < 8; i++)
+				{
+					<div class="dfootitem"></div>
+				}
+			</div>
+		</section>
+	</div>
+	<div class="sidepart">
+		<button>Felad</button>
+		<div class="rowresult">
+			@for (int i = 0; i < 11; i++)
+			{
+				<div class="pinpanel">
+				@for (int j = 0; j < 4; j++)
+				{
+					<div class="pin">
+					</div>
+				}
+				</div>
+			}
+		</div>
+		<button>Csekk</button>
+	</div>
+</div>
+
+
+@code {
+
+}
