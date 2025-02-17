@@ -7,7 +7,7 @@
 			<div class="dhead">
 				@for (int i = 0; i < 4; i++)
 				{
-					<div class="dheaditem"></div>
+					<div class="dheaditem" style="background-color:@randomcolors[i]"></div>
 				}
 			</div>
 		</section>
@@ -31,7 +31,8 @@
 			<div class="dfoot">
 				@for (int i = 0; i < 8; i++)
 				{
-					<div class="dfootitem"></div>
+					var tempindex = i;
+					<div class="dfootitem" style="@SelectedColorStyle(i)" @onclick="() => SelectColor(tempindex)"></div>
 				}
 			</div>
 		</section>
@@ -42,11 +43,10 @@
 			@for (int i = 0; i < 11; i++)
 			{
 				<div class="pinpanel">
-				@for (int j = 0; j < 4; j++)
-				{
-					<div class="pin">
-					</div>
-				}
+					@for (int j = 0; j < 4; j++)
+					{
+						<div class="pin"></div>
+					}
 				</div>
 			}
 		</div>
@@ -56,5 +56,34 @@
 
 
 @code {
+	private string[] colors = { "red", "white", "blue", "pink", "orange", "purple", "yellow", "green" };
+	Random random = new();
+	private string[] randomcolors = new string[4];
+	private string selectedcolor;
+	private int selectedcolorindex;
 
+	protected override void OnInitialized()
+	{
+		for (int i = 0; i < randomcolors.Length; i++)
+		{
+			this.randomcolors[i] = colors[random.Next(0, 7)];
+		}
+		SelectColor(0);
+	}
+
+	private void SelectColor(int index){
+		selectedcolor = colors[index];
+		selectedcolorindex = index;
+	}
+
+	private string SelectedColorStyle (int colorindex){
+		if (colorindex == this.selectedcolorindex)
+		{
+			return $"background-color:{colors[colorindex]}; border: 3px solid black;";
+		}
+		else
+		{
+			return $"background-color:{colors[colorindex]};";
+		}
+	}
 }
