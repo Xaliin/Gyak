@@ -1,6 +1,14 @@
 ﻿@page "/mastermind"
+
 <PageTitle>Mastermind</PageTitle>
 <h1>Mastermind</h1>
+<p>@gblack</p>
+<p>@gwhite</p>
+@foreach(var kpv in randomcolorNums)
+{
+	<p>@kpv.Key - @kpv.Value</p>
+}
+<p></p>
 <div class="table">
 	<div class="gamespace">
 		<section>
@@ -44,10 +52,12 @@
 		<div class="rowresult">
 			@for (int i = 0; i < 11; i++)
 			{
+				int pinrow = i;
 				<div class="pinpanel">
 					@for (int j = 0; j < 4; j++)
 					{
-						<div class="pin"></div>
+						int pin = j;
+						<div class="pin" style="@ChangePinResultColor(i,j)"></div>
 					}
 				</div>
 			}
@@ -65,14 +75,24 @@
 	private int selectedcolorindex;
 	private int currentrow;
 	private string[,] pins = new string[11,4];
+	private Dictionary<string, int> randomcolorNums = new();
+	private string[,] pinresults = new string[11, 4];
+
+	private int gblack;
+	private int gwhite;
 
 	protected override void OnInitialized()
 	{
+		this.currentrow = 0;
+		for (int i = 0; i < colors.Length; i++)
+		{
+			randomcolorNums.Add(colors[i], 0);
+		}
 		for (int i = 0; i < randomcolors.Length; i++)
 		{
-			this.randomcolors[i] = colors[random.Next(0, 7)];
+			randomcolors[i] = colors[random.Next(0, 7)];
+			randomcolorNums[randomcolors[i]]++;
 		}
-		this.currentrow = 0;
 		SelectColor(0);
 	}
 
@@ -121,7 +141,70 @@
 
 		if(meh)
 		{
+			for (int i = 0; i < colors.Length; i++)
+			{
+				randomcolorNums[colors[i]] = 0;
+			}
+			for (int i = 0; i < randomcolors.Length; i++)
+			{
+				randomcolorNums[randomcolors[i]]++;
+			}
+
+			int[] kivesz = CheckRow();
+			int black = kivesz[0];
+			int white = kivesz[1];
+			gblack = black;
+			gwhite = white;
+			List<string> pinek = new List<string>();
+			for (int i = 0; i < black; i++)
+			{
+				pinek.Add("black");
+			}
+			for (int i = 0; i < white; i++)
+			{
+				pinek.Add("white");
+			}
+
+			for (int i = 0; i < 4; i++)
+			{
+				if(i < pinek.Count)
+				{
+					pinresults[currentrow, i] = pinek[i];
+				}
+				else
+				{
+					pinresults[currentrow, i] = "gray";
+				}
+			}
 			currentrow++;
 		}
+	}
+
+	private int[] CheckRow(){
+		int blackpins = 0;
+		int whitepins = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			if (pins[currentrow, i] == randomcolors[i]) //ugyanaz a szín, ugyanabban a mezőben
+			{
+				randomcolorNums[randomcolors[i]]--;
+				blackpins++;
+			}
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			
+			if (randomcolorNums.Any(kv => kv.Key == pins[currentrow,i] && kv.Value > 0))
+			{
+				randomcolorNums[pins[currentrow, i]]--;
+				whitepins++;
+			}
+		}
+		
+		return [blackpins, whitepins];
+	}
+
+	private string ChangePinResultColor(int pinrow, int pin){
+		return $"background-color:{pinresults[pinrow, pin]};";
 	}
 }
