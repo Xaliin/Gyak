@@ -16,10 +16,12 @@
 			<div class="dbody">
 				@for (int i = 0; i < 11; i++)
 				{
+					int row = i;
 					<div class="dbodyitem"> 
 						@for (int j = 0; j < 4; j++)
 						{
-							<div class="ditem"></div>
+							int circle = j;
+							<div class="ditem" style="@ChangePinColor(row, circle)" @onclick="() => PinColor(row, circle)"></div>
 						}
 					</div>
 					<br />
@@ -50,7 +52,7 @@
 				</div>
 			}
 		</div>
-		<button>Csekk</button>
+		<button @onclick="() => Check()">Csekk</button>
 	</div>
 </div>
 
@@ -61,6 +63,8 @@
 	private string[] randomcolors = new string[4];
 	private string selectedcolor;
 	private int selectedcolorindex;
+	private int currentrow;
+	private string[,] pins = new string[11,4];
 
 	protected override void OnInitialized()
 	{
@@ -68,6 +72,7 @@
 		{
 			this.randomcolors[i] = colors[random.Next(0, 7)];
 		}
+		this.currentrow = 0;
 		SelectColor(0);
 	}
 
@@ -84,6 +89,39 @@
 		else
 		{
 			return $"background-color:{colors[colorindex]};";
+		}
+	}
+
+	private void PinColor(int row, int circle){
+		if (currentrow == row)
+		{
+			pins[row, circle] = selectedcolor;
+		}
+	}
+
+	private string ChangePinColor(int row, int circle){
+		if(currentrow == row){
+			return $"background-color:{pins[row, circle]}; box-shadow: gray 3px 3px 10px;";
+		}
+		else 
+		{
+			return $"background-color:{pins[row, circle]};";
+		}
+	}
+
+	private void Check(){
+		bool meh = true;
+		for (int i = 0; i < 4; i++)
+		{
+			if(!colors.Contains(pins[currentrow, i]))
+			{
+				meh = false;
+			}
+		}
+
+		if(meh)
+		{
+			currentrow++;
 		}
 	}
 }
