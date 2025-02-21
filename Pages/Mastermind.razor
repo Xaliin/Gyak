@@ -2,12 +2,12 @@
 @page "/mastermind"
 <PageTitle>Mastermind</PageTitle>
 <h1>Mastermind</h1>
+<!-- cheat
 @for (int i = 0; i < 4; i++)
 {
 	<p>@randomcolors[i]</p>
 }
-<p>@currentrow</p>
-
+-->
 
 <div class="table">
 	<div class="gamespace">
@@ -49,7 +49,7 @@
 		</section>
 	</div>
 	<div class="sidepart">
-		<button @onclick="() => currentrow = 11">Felad</button>
+		<button @onclick="() => Check(true)">Felad</button>
 		<div class="rowresult">
 			@for (int i = 0; i < 11; i++)
 			{
@@ -64,16 +64,9 @@
 				</div>
 			}
 		</div>
-		<button @onclick="() => Check()">Csekk</button>
+		<button @onclick="() => Check(false)">Csekk</button>
 	</div>
 </div>
-
-
-
-<p>@activeRound</p>
-<p>@WinOrLose()</p>
-<p>@currentrow</p>
-
 
 @code {
 	private string[] colors = { "red", "white", "blue", "pink", "orange", "purple", "yellow", "green" };
@@ -87,6 +80,7 @@
 	private string[,] pinresults = new string[11, 4];
 	private int blacks = 0;
 	private bool activeRound = true;
+	private bool end = false;
 
 	private int gblack;
 	private int gwhite;
@@ -107,27 +101,6 @@
 	}
 
 	private string HideOrReveal(int index){
-		blacks = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			if (currentrow > 0)
-			{
-				if (pinresults[currentrow-1, i] == "black")
-				{
-					blacks++;
-				}
-			}
-		}
-
-		if (blacks >= 4)	
-		{
-			activeRound = false;
-		}
-
-		if (currentrow >= 11){
-			activeRound = false;
-		}
-
 		if (activeRound){
 			return $"background-color: gray";
 		}
@@ -170,55 +143,81 @@
 		}
 	}
 
-	private void Check(){
-		bool meh = true;
-		for (int i = 0; i < 4; i++)
+	private void Check(bool giveup){
+		if (!end)
 		{
-			if(!colors.Contains(pins[currentrow, i]))
-			{
-				meh = false;
-			}
-		}
-
-		if(meh)
-		{
-			for (int i = 0; i < colors.Length; i++)
-			{
-				randomcolorNums[colors[i]] = 0;
-			}
-			for (int i = 0; i < randomcolors.Length; i++)
-			{
-				randomcolorNums[randomcolors[i]]++;
-			}
-
-			int[] kivesz = CheckRow();
-			int black = kivesz[0];
-			int white = kivesz[1];
-			gblack = black;
-			gwhite = white;
-			List<string> pinek = new List<string>();
-			for (int i = 0; i < black; i++)
-			{
-				pinek.Add("black");
-			}
-			for (int i = 0; i < white; i++)
-			{
-				pinek.Add("white");
-			}
-
+			bool meh = true;
 			for (int i = 0; i < 4; i++)
 			{
-				if(i < pinek.Count)
+				if(!colors.Contains(pins[currentrow, i]))
 				{
-					pinresults[currentrow, i] = pinek[i];
-				}
-				else
-				{
-					pinresults[currentrow, i] = "gray";
+					meh = false;
 				}
 			}
-			GameEnd();
-			currentrow++;
+
+			if(meh || giveup)
+			{
+				for (int i = 0; i < colors.Length; i++)
+				{
+					randomcolorNums[colors[i]] = 0;
+				}
+				for (int i = 0; i < randomcolors.Length; i++)
+				{
+					randomcolorNums[randomcolors[i]]++;
+				}
+
+				int[] kivesz = CheckRow();
+				int black = kivesz[0];
+				int white = kivesz[1];
+				gblack = black;
+				gwhite = white;
+				List<string> pinek = new List<string>();
+				for (int i = 0; i < black; i++)
+				{
+					pinek.Add("black");
+				}
+				for (int i = 0; i < white; i++)
+				{
+					pinek.Add("white");
+				}
+
+				for (int i = 0; i < 4; i++)
+				{
+					if(i < pinek.Count)
+					{
+						pinresults[currentrow, i] = pinek[i];
+					}
+					else
+					{
+						pinresults[currentrow, i] = "gray";
+					}
+				}
+
+				blacks = 0;
+				for (int i = 0; i < 4; i++)
+				{
+					if (pinresults[currentrow, i] == "black")
+					{
+						blacks++;
+					}
+				}
+
+				if (blacks >= 4)
+				{
+					activeRound = false;
+				}
+
+				if (currentrow >= 10 || giveup)
+				{
+					activeRound = false;
+				}
+
+				if (!activeRound)
+				{
+					GameEnd();	
+				}
+				currentrow++;
+			}
 		}
 	}
 
@@ -251,15 +250,10 @@
 	}
 
 	private bool WinOrLose(){
-		bool result = true;
+		bool result = false;
 		if (blacks >= 4)
 		{
 			result = true;
-			return result;
-		}
-		if (currentrow >= 11)
-		{
-			result = false;
 		}
 		return result;
 	}
@@ -268,12 +262,13 @@
 		if (!activeRound && WinOrLose())
 		{
 			JsRuntime.InvokeVoidAsync("alert", "Nyertél!");
-			currentrow = 11;
+			currentrow = 10;
 		}
 		else if (!activeRound && !WinOrLose())
 		{
 			JsRuntime.InvokeVoidAsync("alert", "Vesztettél!");
-			currentrow = 11;
+			currentrow = 10;
 		}
+		end = true;
 	}
 }
