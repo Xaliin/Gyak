@@ -1,0 +1,1 @@
+﻿.board .colors{display:flex;gap:4px;}.board .peg{width:16px;height:16px;border-radius:50%;}.board .peg-a{background-color:#f00;}.board .peg-b{background-color:#008000;}.board .peg-c{background-color:#00f;}.board .peg-d{background-color:#ff0;}.board .peg-e{background-color:#ffc0cb;}.board .peg-f{background-color:#800080;}

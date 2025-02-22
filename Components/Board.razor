@@ -1,0 +1,16 @@
+﻿<h3>Board</h3>
+
+<div class="board">
+	<div class="question"></div>
+	<div class="tries"></div>
+	<div class="colors">
+		@foreach (var peg in Mastermind.AvailableColors)
+		{
+			<PegComponent Peg="peg" />
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter] public Mastermind Mastermind { get; set; }
+}

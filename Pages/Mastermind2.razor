@@ -1,0 +1,16 @@
+﻿@page "/game"
+
+<Board  Mastermind="_mastermind" />
+
+@code {
+	private Mastermind _mastermind;
+
+	protected override void OnInitialized()
+	{
+		var settings = Settings.Create(4,4,10);
+		_mastermind = Mastermind.Create(settings);
+
+		base.OnInitialized();
+	}
+}
+

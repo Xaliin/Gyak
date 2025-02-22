@@ -1,0 +1,27 @@
+﻿.board .colors {
+  display: flex;
+  gap: 4px;
+}
+.board .peg {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+.board .peg-a {
+  background-color: red;
+}
+.board .peg-b {
+  background-color: green;
+}
+.board .peg-c {
+  background-color: blue;
+}
+.board .peg-d {
+  background-color: yellow;
+}
+.board .peg-e {
+  background-color: pink;
+}
+.board .peg-f {
+  background-color: purple;
+}

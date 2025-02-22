@@ -1,0 +1,42 @@
+﻿.board {
+    .question {
+    }
+
+    .tries {
+    }
+
+    .colors {
+        display: flex;
+        gap: 4px;
+    }
+
+    .peg {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+    }
+
+    .peg-a {
+        background-color: red;
+    }
+
+    .peg-b {
+        background-color: green;
+    }
+
+    .peg-c {
+        background-color: blue;
+    }
+
+    .peg-d {
+        background-color: yellow;
+    }
+
+    .peg-e {
+        background-color: pink;
+    }
+
+    .peg-f {
+        background-color: purple;
+    }
+}

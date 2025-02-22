@@ -2,12 +2,12 @@
 @page "/mastermind"
 <PageTitle>Mastermind</PageTitle>
 <h1>Mastermind</h1>
-<!-- cheat -->
+<!-- cheat
 @for (int i = 0; i < 4; i++)
 {
 	<p>@randomcolors[i]</p>
 }
-<!-- -->
+-->
 
 <div class="table">
 	<div class="gamespace">
@@ -59,7 +59,7 @@
 					{
 
 						int pin = j;
-						<div class="pin" style="@ChangePinResultColor(i,j)"></div>
+						<div class="pin" style="@ChangePinResultColor(pinrow,pin)"></div>
 					}
 				</div>
 			}

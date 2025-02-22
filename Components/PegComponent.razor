@@ -1,0 +1,8 @@
+﻿<div class="@_cssClass"></div>
+
+@code {
+	[Parameter] public Peg Peg { get; set; }
+
+	private string _cssClass => $"peg peg-{Peg.Value.ToString().ToLower()}";
+
+}
