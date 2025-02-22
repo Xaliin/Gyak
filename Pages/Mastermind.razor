@@ -2,12 +2,12 @@
 @page "/mastermind"
 <PageTitle>Mastermind</PageTitle>
 <h1>Mastermind</h1>
-<!-- cheat
+<!-- cheat -->
 @for (int i = 0; i < 4; i++)
 {
 	<p>@randomcolors[i]</p>
 }
--->
+<!-- -->
 
 <div class="table">
 	<div class="gamespace">
@@ -102,7 +102,7 @@
 
 	private string HideOrReveal(int index){
 		if (activeRound){
-			return $"background-color: gray";
+			return $"background-color: #104f6b";
 		}
 
 		return $"background-color: {randomcolors[index]}";
@@ -116,7 +116,7 @@
 	private string SelectedColorStyle (int colorindex){
 		if (colorindex == this.selectedcolorindex)
 		{
-			return $"background-color:{colors[colorindex]}; border: 3px solid black;";
+			return $"background-color:{colors[colorindex]}; border: 3px solid #104f6b;";
 		}
 		else
 		{
@@ -135,7 +135,7 @@
 
 	private string ChangePinColor(int row, int circle){
 		if(currentrow == row){
-			return $"background-color:{pins[row, circle]}; box-shadow: gray 3px 3px 10px;";
+			return $"background-color:{pins[row, circle]}; box-shadow: #11454a 3px 3px 10px;";
 		}
 		else 
 		{
@@ -189,7 +189,7 @@
 					}
 					else
 					{
-						pinresults[currentrow, i] = "gray";
+						pinresults[currentrow, i] = "#9fdffc";
 					}
 				}
 

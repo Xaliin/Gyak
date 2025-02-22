@@ -7,11 +7,6 @@
     margin: 0 auto;
 }
 
-h1 {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 
 
 .gamespace {
@@ -27,31 +22,36 @@ h1 {
     padding: 10px 18px;
     box-shadow: gray -5px 5px 20px;
     height: 660px;
+    background-color: #42bcf5;
 }
 
 .dhead {
     display: flex;
     gap: 10px;
+    background-color: #42bcf5;
 }
 .dheaditem {
-    border: 2px solid black;
+    border: 2px solid #104f6b;
     border-radius: 45px;
     width: 40px;
     height: 40px;
+    box-shadow: #11454a 2px 2px 6px;
 }
 
 .ditem {
-    border: 1px solid black;
+    border: 1px solid #104f6b;
     border-radius: 45px;
     width: 30px;
     height: 30px;
     cursor: pointer;
     display: flex;
+    background-color: #9fdffc;
 }
 
 .dbody {
     display: flex;
     flex-direction: column;
+    background-color: #42bcf5;
 }
 
 .dbodyitem {
@@ -63,14 +63,16 @@ h1 {
 .dfoot {
     display: flex;
     gap: 5px;
+    background-color: #42bcf5;
 }
 
 .dfootitem {
-    border: 2px solid black;
+    border: 1px solid #104f6b;
     border-radius: 45px;
     width: 30px;
     height: 30px;
     cursor: pointer;
+    box-shadow: #11454a 2px 2px 6px;
 }
 
 
@@ -105,9 +107,10 @@ h1 {
 }
 
 .pin {
-    border: 1px solid black;
+    border: 0px solid black;
     border-radius: 5px;
-    background-color: saddlebrown;
+    background-color: #9fdffc;
+    box-shadow: inset gray 1px 1px 2px;
     width: 10px;
     height: 10px;
 }
@@ -115,9 +118,11 @@ h1 {
 button {
     border: none;
     border-radius: 20px;
-    background-color: lightblue;
+    background-color: #9fdffc;
     margin-top: 10px;
     margin-bottom: 10px;
     height: 40px;
     width: 70px;
+    box-shadow: gray 1px 2px 5px;
+    font-weight: 600;
 }
