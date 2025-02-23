@@ -2,7 +2,44 @@
 
 <div class="board">
 	<div class="question"></div>
-	<div class="tries"></div>
+	<div class="rounds">
+		@for (int i = 0; i < Mastermind.Settings.TriesNum; i++)
+		{
+			<div class="round">
+				@if (Mastermind.Rounds.Count <= i)
+				{
+					<div class="pegs">
+						@for (int k = 0; k < Mastermind.Settings.PegNum; k++)
+						{
+							<PegComponent />
+						}
+					</div>
+					<div class="pins">
+						@for (int l = 0; l < Mastermind.Settings.PegNum; l++)
+						{
+							<PinComponent Pin="Pin.None" />
+						}
+					</div>
+				}
+				else 
+				{
+					var round = Mastermind.Rounds[i];
+					<div class="pegs">
+						@for (int k = 0; k < round.Guess.Pegs.Count; k++)
+						{
+							<PegComponent Peg="round.Guess.Pegs[k]"/>
+						}
+					</div>
+					<div class="pins">
+						@for (int l = 0; l < round.Result.Pins.Count; l++)
+						{
+							<PinComponent Pin="round.Result.Pins[l]" />
+						}
+					</div>
+				}
+			</div>
+		}
+	</div>
 	<div class="colors">
 		@foreach (var peg in Mastermind.AvailableColors)
 		{

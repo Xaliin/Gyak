@@ -1,0 +1,13 @@
+﻿<div class="@_cssClass"></div>
+
+@code {
+	[Parameter] public Pin Pin { get; set; }
+
+	private string _cssClass
+	{
+		get
+		{
+			return $"pin pin-{Pin.ToString().ToLower()}";
+		}
+	}
+}

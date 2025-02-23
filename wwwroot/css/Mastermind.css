@@ -1,11 +1,38 @@
-﻿.board .colors {
+﻿.board {
+  background-color: greenyellow;
+  width: fit-content;
+  padding: 20px 20px;
+}
+.board .rounds {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.board .rounds .round {
+  display: flex;
+}
+.board .rounds .round .pegs {
+  display: flex;
+  gap: 4px;
+}
+.board .rounds .round .pins {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-flow: column;
+  gap: 4px;
+}
+.board .colors {
   display: flex;
   gap: 4px;
 }
 .board .peg {
-  width: 16px;
-  height: 16px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
+  border: 1px solid black;
+}
+.board .peg-none {
+  background-color: bisque;
 }
 .board .peg-a {
   background-color: red;
@@ -24,4 +51,19 @@
 }
 .board .peg-f {
   background-color: purple;
+}
+.board .pin {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.board .pin-none {
+  background-color: bisque;
+}
+.board .pin-black {
+  background-color: black;
+}
+.board .pin-white {
+  background-color: white;
 }

@@ -3,6 +3,14 @@
 @code {
 	[Parameter] public Peg Peg { get; set; }
 
-	private string _cssClass => $"peg peg-{Peg.Value.ToString().ToLower()}";
+	private string _cssClass 
+	{
+		get 
+		{
+			if (Peg == null)
+				return "peg peg-none";
 
+			return $"peg peg-{Peg.Value.ToString().ToLower()}";
+		}
+	}
 }

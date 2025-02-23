@@ -6,11 +6,16 @@ namespace Gyak.Game
     {
         private Settings _settings;
         private List<Peg> _availableColors = [];
+        private List<Round> _rounds = [];
+        private Question _question;
+        public Settings Settings => _settings;
         public IReadOnlyList<Peg> AvailableColors => _availableColors.AsReadOnly();
+        public IReadOnlyList<Round> Rounds => _rounds.AsReadOnly();
 
         private Mastermind(Settings settings)
         {
             _settings = settings;
+            _question = Question.Create(settings);
             CreateAvailableColors();
         }
 
@@ -34,6 +39,16 @@ namespace Gyak.Game
             }
         }
 
+        public Guess CreateGuess()
+        {
+            return Guess.Create(_settings.PegNum);
+        }
 
+        public void AddGuess(Guess guess)
+        {
+            if (!guess.IsValid()) return;
+
+            _rounds.Add(Round.Check(_question, guess));
+        }
     }
 }

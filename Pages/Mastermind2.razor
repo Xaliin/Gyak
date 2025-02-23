@@ -1,6 +1,7 @@
 ﻿@page "/game"
 
 <Board  Mastermind="_mastermind" />
+<button type="button" @onclick="TippHandler">Tipp</button>
 
 @code {
 	private Mastermind _mastermind;
@@ -11,6 +12,16 @@
 		_mastermind = Mastermind.Create(settings);
 
 		base.OnInitialized();
+	}
+
+	private void TippHandler()
+	{
+		var guess = _mastermind.CreateGuess();
+		guess.SetPeg(0,Peg.Create('A'));
+		guess.SetPeg(1,Peg.Create('B'));
+		guess.SetPeg(2,Peg.Create('C'));
+		guess.SetPeg(3,Peg.Create('D'));
+		_mastermind.AddGuess(guess);
 	}
 }
 
