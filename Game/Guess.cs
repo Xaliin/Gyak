@@ -42,7 +42,7 @@ namespace Gyak.Game
             //return true;
         }
         
-        public bool IsCorrent
+        public bool IsCorrect
         {
             get
             {

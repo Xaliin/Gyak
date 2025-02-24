@@ -8,9 +8,12 @@ namespace Gyak.Game
         private List<Peg> _availableColors = [];
         private List<Round> _rounds = [];
         private Question _question;
+        private List<Peg> _selected = new List<Peg>();
         public Settings Settings => _settings;
         public IReadOnlyList<Peg> AvailableColors => _availableColors.AsReadOnly();
         public IReadOnlyList<Round> Rounds => _rounds.AsReadOnly();
+        public IReadOnlyList<Peg> Selected => _selected.AsReadOnly();
+
 
         private Mastermind(Settings settings)
         {
@@ -21,7 +24,7 @@ namespace Gyak.Game
 
         public static Mastermind Create(Settings settings)
         {
-            return new Mastermind(settings); 
+            return new Mastermind(settings);
         }
 
         public static Mastermind Create()
@@ -49,6 +52,16 @@ namespace Gyak.Game
             if (!guess.IsValid()) return;
 
             _rounds.Add(Round.Check(_question, guess));
+        }
+
+        public void AddPeg(Peg peg)
+        {
+            _selected.Add(peg);
+        }
+        
+        public void EmptyQueue()
+        {
+            _selected.Clear();
         }
     }
 }

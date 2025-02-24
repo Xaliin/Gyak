@@ -13,5 +13,7 @@ namespace Gyak.Game
         }
 
         public static Peg Create(char value) => new Peg(value);
+
+
     }
 }

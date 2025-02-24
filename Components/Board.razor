@@ -40,14 +40,41 @@
 			</div>
 		}
 	</div>
+
+	<div class="guess">
+		@if(true)
+		{
+			var preguess = Mastermind.Selected;
+			@for (int l = 0; l < Mastermind.Settings.PegNum; l++)
+			{
+				if(preguess.Count > l)
+				{
+					<PegComponent Peg="preguess[l]" />
+				}
+				else
+				{
+					<PegComponent/>
+				}
+			}
+		}
+
+	</div>
 	<div class="colors">
 		@foreach (var peg in Mastermind.AvailableColors)
 		{
-			<PegComponent Peg="peg" />
+			<PegComponent Peg="peg" PickColor=@SelectColor />
 		}
 	</div>
 </div>
 
 @code {
 	[Parameter] public Mastermind Mastermind { get; set; }
+
+	public void SelectColor(Peg peg)
+	{
+		if(Mastermind.Selected.Count < Mastermind.Settings.PegNum)
+		{
+			Mastermind.AddPeg(peg);
+		}
+	}
 }

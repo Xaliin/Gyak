@@ -1,16 +1,22 @@
-﻿<div class="@_cssClass"></div>
+﻿<div class="@_cssClass" @onclick="OnClick"></div>
 
 @code {
 	[Parameter] public Peg Peg { get; set; }
+	[Parameter] public EventCallback<Peg> PickColor { get; set; }
 
-	private string _cssClass 
+	private string _cssClass
 	{
-		get 
+		get
 		{
 			if (Peg == null)
 				return "peg peg-none";
 
 			return $"peg peg-{Peg.Value.ToString().ToLower()}";
 		}
+	}
+
+	public void OnClick()
+	{
+		PickColor.InvokeAsync(Peg);
 	}
 }

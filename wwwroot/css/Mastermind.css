@@ -21,6 +21,10 @@
   grid-auto-flow: column;
   gap: 4px;
 }
+.board .guess {
+  display: flex;
+  gap: 4px;
+}
 .board .colors {
   display: flex;
   gap: 4px;

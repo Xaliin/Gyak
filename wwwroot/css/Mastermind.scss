@@ -2,6 +2,7 @@
     background-color: greenyellow;
     width: fit-content;
     padding: 20px 20px;
+
     .question {
     }
 
@@ -25,6 +26,11 @@
                 gap: 4px;
             }
         }
+    }
+
+    .guess {
+        display: flex;
+        gap: 4px;
     }
 
     .colors {

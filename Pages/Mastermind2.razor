@@ -17,11 +17,17 @@
 	private void TippHandler()
 	{
 		var guess = _mastermind.CreateGuess();
-		guess.SetPeg(0,Peg.Create('A'));
-		guess.SetPeg(1,Peg.Create('B'));
-		guess.SetPeg(2,Peg.Create('C'));
-		guess.SetPeg(3,Peg.Create('D'));
+		for (int i = 0; i < _mastermind.Settings.PegNum; i++)
+		{
+			guess.SetPeg(i, _mastermind.Selected[i]);
+
+		}
 		_mastermind.AddGuess(guess);
+		_mastermind.EmptyQueue();
+
+		
+		
+
 	}
 }
 
