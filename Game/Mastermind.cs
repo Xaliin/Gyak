@@ -63,5 +63,14 @@ namespace Gyak.Game
         {
             _selected.Clear();
         }
+
+        public void Configure(Settings settings)
+        {
+            _settings = settings;
+            CreateAvailableColors();
+            _rounds = [];
+            _selected = [];
+            _question = Question.Create(settings);
+        }
     }
 }

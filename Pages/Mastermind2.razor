@@ -1,15 +1,17 @@
 ﻿@page "/game"
 
-<Board  Mastermind="_mastermind" />
+<Board  Mastermind=@_mastermind />
+
 <button type="button" @onclick="TippHandler">Tipp</button>
+
+<Options Settings=@_mastermind.Settings OnOptionsChanged=@ChangeSettings/>
 
 @code {
 	private Mastermind _mastermind;
 
 	protected override void OnInitialized()
 	{
-		var settings = Settings.Create(4,4,10);
-		_mastermind = Mastermind.Create(settings);
+		_mastermind = Mastermind.Create();
 
 		base.OnInitialized();
 	}
@@ -20,14 +22,13 @@
 		for (int i = 0; i < _mastermind.Settings.PegNum; i++)
 		{
 			guess.SetPeg(i, _mastermind.Selected[i]);
-
 		}
 		_mastermind.AddGuess(guess);
 		_mastermind.EmptyQueue();
+	}
 
-		
-		
-
+	private void ChangeSettings(Settings settings){
+		_mastermind.Configure(settings);
 	}
 }
 

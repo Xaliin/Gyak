@@ -1,0 +1,35 @@
+﻿<div class="options">
+	<EditForm Model=@this OnValidSubmit=@ValidSubmitHandler>
+		<label>Bábuk száma</label>
+		<InputNumber class="opt-input" @bind-Value=_pegNum />
+		<label>Színek száma</label>
+		<InputNumber class="opt-input" @bind-Value=_colorsNum />
+		<label>Próbálkozások száma</label>
+		<InputNumber class="opt-input" @bind-Value=_triesNum />
+		<button type="submit">Újraindít</button>
+	</EditForm>
+</div>
+
+@code {
+	[Parameter] public Settings Settings { get; set; }
+	[Parameter] public EventCallback<Settings> OnOptionsChanged { get; set; }
+
+	private int _pegNum;
+	private int _colorsNum;
+	private int _triesNum;
+
+	protected override void OnInitialized()
+	{
+		_pegNum = Settings.PegNum;
+		_colorsNum = Settings.ColorsNum;
+		_triesNum = Settings.TriesNum;
+
+		base.OnInitialized();
+	}
+
+	private void ValidSubmitHandler()
+	{
+		var settings = Settings.Create(_pegNum, _colorsNum, _triesNum);
+		OnOptionsChanged.InvokeAsync(settings);
+	}
+}

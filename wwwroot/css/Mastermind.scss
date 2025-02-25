@@ -2,6 +2,7 @@
     background-color: greenyellow;
     width: fit-content;
     padding: 20px 20px;
+    border-radius: 30px;
 
     .question {
     }
@@ -73,6 +74,10 @@
         background-color: purple;
     }
 
+    .peg-g {
+        background-color: white;
+    }
+
     .pin {
         width: 12px;
         height: 12px;
@@ -90,5 +95,27 @@
 
     .pin-white {
         background-color: white;
+    }
+}
+
+button {
+    border-radius: 15px;
+    border: none;
+    width: fit-content;
+    height: 30px;
+    background-color: indianred;
+    color: white;
+}
+
+.options {
+    display: flex; //
+    flex-direction: column;
+
+    .opt-input {
+        background-color: bisque;
+        border: none;
+        border-radius: 25px;
+        width: 40px;
+        text-align: center;
     }
 }
