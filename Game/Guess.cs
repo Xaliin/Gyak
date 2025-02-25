@@ -29,6 +29,12 @@ namespace Gyak.Game
             _pegs[pegIndex] = peg;
         }
 
+        public void AddPeg(Peg peg)
+        {
+            var index = _pegs.IndexOf(null);
+            SetPeg(index, peg);
+        }
+
         public bool IsValid()
         {
             return _pegs.All(m => m != null);

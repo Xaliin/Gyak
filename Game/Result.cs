@@ -10,6 +10,7 @@
     {
         private List<Pin> _pins = [];
         public IReadOnlyList<Pin> Pins => _pins.AsReadOnly();
+        public bool IsMatch => _pins.All(p => p == Pin.Black);
 
         private Result(int pinCount)
         {

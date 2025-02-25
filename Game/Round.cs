@@ -35,5 +35,18 @@
             var result = Result.Create(black, white, none);
             return new Round(guess, result);
         }
+        public bool IsMatch()
+        {
+            int blacks = 0;
+            foreach (var pin in _result.Pins)
+            {
+                if (pin == Pin.Black)
+                {
+                    blacks++;
+                }
+            }
+
+            return blacks == _result.Pins.Count;
+        }
     }
 }

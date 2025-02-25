@@ -14,6 +14,10 @@ namespace Gyak.Game
         public IReadOnlyList<Round> Rounds => _rounds.AsReadOnly();
         public IReadOnlyList<Peg> Selected => _selected.AsReadOnly();
 
+        public event EventHandler<string> MessageReceived;
+        public event EventHandler<bool> GameFinished;
+
+
 
         private Mastermind(Settings settings)
         {
@@ -50,8 +54,18 @@ namespace Gyak.Game
         public void AddGuess(Guess guess)
         {
             if (!guess.IsValid()) return;
+            var round = Round.Check(_question, guess);
+            _rounds.Add(round);
 
-            _rounds.Add(Round.Check(_question, guess));
+            if (round.IsMatch())
+            {
+                GameFinished?.Invoke(this, true);
+            }
+            else if (_rounds.Count == _settings.TriesNum)
+            {
+                GameFinished?.Invoke(this, false);
+            }
+            else MessageReceived?.Invoke(this, "Hozzáadtál egy tippet.");
         }
 
         public void AddPeg(Peg peg)

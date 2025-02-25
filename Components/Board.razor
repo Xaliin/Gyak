@@ -6,18 +6,30 @@
 		@for (int i = 0; i < Mastermind.Settings.TriesNum; i++)
 		{
 			<div class="round">
-				@if (Mastermind.Rounds.Count <= i)
+				@if (Mastermind.Rounds.Count < i)
 				{
 					<div class="pegs">
 						@for (int k = 0; k < Mastermind.Settings.PegNum; k++)
 						{
-							<PegComponent />
+							@EmptyPegTemplate
 						}
 					</div>
 					<div class="pins">
 						@for (int l = 0; l < Mastermind.Settings.PegNum; l++)
 						{
-							<PinComponent Pin="Pin.None" />
+							@EmptyPinTemplate
+						}
+					</div>
+				}
+				else if(Mastermind.Rounds.Count == i) 
+				{
+					<div class="pegs">
+						@GuessTemplate
+					</div>
+					<div class="pins">
+						@for (int l = 0; l < Mastermind.Settings.PegNum; l++)
+						{
+							@EmptyPinTemplate
 						}
 					</div>
 				}
@@ -27,52 +39,32 @@
 					<div class="pegs">
 						@for (int k = 0; k < round.Guess.Pegs.Count; k++)
 						{
-							<PegComponent Peg="round.Guess.Pegs[k]"/>
+							@PegTemplate(round.Guess.Pegs[k])
 						}
 					</div>
 					<div class="pins">
 						@for (int l = 0; l < round.Result.Pins.Count; l++)
 						{
-							<PinComponent Pin="round.Result.Pins[l]" />
+							@PinTemplate(round.Result.Pins[l])
 						}
 					</div>
 				}
 			</div>
 		}
 	</div>
-	<div class="guess">
-		@if(true)
-		{
-			var preguess = Mastermind.Selected;
-			@for (int l = 0; l < Mastermind.Settings.PegNum; l++)
-			{
-				if(preguess.Count > l)
-				{
-					<PegComponent Peg="preguess[l]" />
-				}
-				else
-				{
-					<PegComponent/>
-				}
-			}
-		}
-	</div>
+	
 	<div class="colors">
-		@foreach (var peg in Mastermind.AvailableColors)
-		{
-			<PegComponent Peg="peg" PickColor=@SelectColor />
-		}
+		@ColorsTemplate
 	</div>
 </div>
 
 @code {
 	[Parameter] public Mastermind Mastermind { get; set; }
+	[Parameter] public RenderFragment EmptyPegTemplate { get; set; }
+	[Parameter] public RenderFragment<Peg> PegTemplate { get; set; }
+	[Parameter] public RenderFragment EmptyPinTemplate { get; set; }
+	[Parameter] public RenderFragment<Pin> PinTemplate { get; set; }
+	[Parameter] public RenderFragment GuessTemplate { get; set; }
+	[Parameter] public RenderFragment ColorsTemplate { get; set; }
 
-	public void SelectColor(Peg peg)
-	{
-		if(Mastermind.Selected.Count < Mastermind.Settings.PegNum)
-		{
-			Mastermind.AddPeg(peg);
-		}
-	}
 }
