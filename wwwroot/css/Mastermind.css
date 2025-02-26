@@ -4,6 +4,10 @@
   padding: 20px 20px;
   border-radius: 30px;
 }
+.board .question {
+  display: flex;
+  gap: 4px;
+}
 .board .rounds {
   display: flex;
   flex-direction: column;

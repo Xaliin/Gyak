@@ -1,6 +1,10 @@
 ﻿@page "/game"
-
+<Clock>
+</Clock>
 <Board Mastermind=@_mastermind>
+	<QuestionTemplate>
+		<PegComponent Peg="context" />
+	</QuestionTemplate>
 	<EmptyPegTemplate>
 		<PegComponent />
 	</EmptyPegTemplate>
@@ -14,16 +18,10 @@
 		<PinComponent Pin="context" />
 	</PinTemplate>
 	<GuessTemplate>
-		@foreach (var peg in _guess.Pegs) // GuessComponent
-		{
-			<PegComponent Peg="peg" />
-		}
+		<PegComponent Peg="_guess.Pegs[context]" />
 	</GuessTemplate>
 	<ColorsTemplate>
-		@foreach (var peg in _mastermind.AvailableColors) //AvailableComponent
-		{
-			<PegComponent Peg="peg" PickColor=@PickColorHandler />
-		}
+		<PegComponent Peg="context" PickColor=@PickColorHandler />
 	</ColorsTemplate>
 </Board>
 
@@ -59,16 +57,20 @@
 	private void ChangeSettings(Settings settings)
 	{
 		_mastermind.Configure(settings);
+		_message = null;
 	}
 
 	private void PickColorHandler(Peg peg)
 	{
-		_guess.AddPeg(peg);
-		if (_guess.IsValid())
+		if(!_mastermind.GameEnded)
 		{
-			_mastermind.AddGuess(_guess);
-			_guess = _mastermind.CreateGuess();
+			_guess.AddPeg(peg);
+			if (_guess.IsValid())
+			{
+				_mastermind.AddGuess(_guess);
+				_guess = _mastermind.CreateGuess();
 
+			}
 		}
 	}
 }

@@ -9,13 +9,17 @@ namespace Gyak.Game
         private List<Round> _rounds = [];
         private Question _question;
         private List<Peg> _selected = new List<Peg>();
+        private bool _gameEnded;
         public Settings Settings => _settings;
+        public Question Question => _question;
         public IReadOnlyList<Peg> AvailableColors => _availableColors.AsReadOnly();
         public IReadOnlyList<Round> Rounds => _rounds.AsReadOnly();
         public IReadOnlyList<Peg> Selected => _selected.AsReadOnly();
+        public bool GameEnded => _gameEnded;
 
         public event EventHandler<string> MessageReceived;
         public event EventHandler<bool> GameFinished;
+
 
 
 
@@ -23,6 +27,7 @@ namespace Gyak.Game
         {
             _settings = settings;
             _question = Question.Create(settings);
+            _gameEnded = false;
             CreateAvailableColors();
         }
 
@@ -53,6 +58,7 @@ namespace Gyak.Game
 
         public void AddGuess(Guess guess)
         {
+
             if (!guess.IsValid()) return;
             var round = Round.Check(_question, guess);
             _rounds.Add(round);
@@ -60,12 +66,15 @@ namespace Gyak.Game
             if (round.IsMatch())
             {
                 GameFinished?.Invoke(this, true);
+                _gameEnded = true;
             }
             else if (_rounds.Count == _settings.TriesNum)
             {
                 GameFinished?.Invoke(this, false);
+                _gameEnded = true;
             }
             else MessageReceived?.Invoke(this, "Hozzáadtál egy tippet.");
+            
         }
 
         public void AddPeg(Peg peg)
@@ -85,6 +94,7 @@ namespace Gyak.Game
             _rounds = [];
             _selected = [];
             _question = Question.Create(settings);
+            _gameEnded = false;
         }
     }
 }
