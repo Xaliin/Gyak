@@ -1,37 +1,22 @@
-﻿<div>
-    @min:@sec
+﻿@implements IDisposable
+<div>
+    @_elapsedText
 </div>
 
 @code {
     [Parameter] public Mastermind Mastermind { get; set; }
+    private string _elapsedText => $"{Mastermind.ElapsedTime:mm}:{Mastermind.ElapsedTime:ss}";
 
-    private int min;
-    private int sec;
     private Timer timer;
     protected override void OnInitialized()
     {
-        min = 0;
-        sec = 0;
-        timer = new Timer(UpdateClock, null, 0, 200);
+        timer = new Timer(UpdateClock, null, 0, 1000);
 
     }
 
     private void UpdateClock(object state)
     {
-        InvokeAsync(() =>
-        {
-
-                if (sec == 59)
-                {
-                    sec = 0;
-                    min += 1;
-                }
-                else
-                {
-                    sec += 1;
-                }
-                StateHasChanged();
-        });
+        InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()

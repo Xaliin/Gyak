@@ -1,0 +1,10 @@
+@foreach (var peg in Pegs)
+{
+    <PegComponent Peg="peg" PickColor=@PickColor />
+}
+
+@code {
+    [Parameter] public IReadOnlyList<Peg> Pegs { get; set; }
+	[Parameter] public EventCallback<Peg> PickColor { get; set; }
+
+}

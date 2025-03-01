@@ -1,12 +1,12 @@
 ﻿<h3>Board</h3>
 
 <div class="board">
-	<div class="question" style="@(Mastermind.GameEnded ? "display: flex" : "display: none")">
-		@for (int i = 0; i < Mastermind.Settings.PegNum; i++)
-		{
-			@QuestionTemplate(Mastermind.Question.Pegs[i])
-		}
-	</div>
+	@if (Mastermind.GameEnded)
+	{
+		<div class="question">
+			@QuestionTemplate
+		</div>
+	}
 	<div class="rounds">
 		@for (int i = 0; i < Mastermind.Settings.TriesNum; i++)
 		{
@@ -29,11 +29,7 @@
 				else if(Mastermind.Rounds.Count == i) 
 				{
 					<div class="pegs">
-						@for(int g = 0; g < Mastermind.Settings.PegNum; g++)
-						{
-							@GuessTemplate(g)
-						}
-
+						@GuessTemplate
 					</div>
 					<div class="pins">
 						@for (int l = 0; l < Mastermind.Settings.PegNum; l++)
@@ -63,10 +59,8 @@
 	</div>
 
 	<div class="colors">
-		@for(int i = 0; i < Mastermind.AvailableColors.Count; i++)
-		{
-			@ColorsTemplate(Mastermind.AvailableColors[i])
-		}
+		@ColorsTemplate
+		
 
 	</div>
 </div>
@@ -77,7 +71,7 @@
 	[Parameter] public RenderFragment<Peg> PegTemplate { get; set; }
 	[Parameter] public RenderFragment EmptyPinTemplate { get; set; }
 	[Parameter] public RenderFragment<Pin> PinTemplate { get; set; }
-	[Parameter] public RenderFragment<int> GuessTemplate { get; set; }
-	[Parameter] public RenderFragment<Peg> ColorsTemplate { get; set; }
-	[Parameter] public RenderFragment<Peg> QuestionTemplate { get; set; }
+	[Parameter] public RenderFragment GuessTemplate { get; set; }
+	[Parameter] public RenderFragment ColorsTemplate { get; set; }
+	[Parameter] public RenderFragment QuestionTemplate { get; set; }
 }

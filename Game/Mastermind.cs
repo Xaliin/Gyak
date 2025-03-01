@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Gyak.Game
 {
@@ -10,12 +11,15 @@ namespace Gyak.Game
         private Question _question;
         private List<Peg> _selected = new List<Peg>();
         private bool _gameEnded;
+
+        private Stopwatch _stopwatch;
         public Settings Settings => _settings;
         public Question Question => _question;
         public IReadOnlyList<Peg> AvailableColors => _availableColors.AsReadOnly();
         public IReadOnlyList<Round> Rounds => _rounds.AsReadOnly();
         public IReadOnlyList<Peg> Selected => _selected.AsReadOnly();
         public bool GameEnded => _gameEnded;
+        public TimeSpan ElapsedTime => _stopwatch.Elapsed;
 
         public event EventHandler<string> MessageReceived;
         public event EventHandler<bool> GameFinished;
@@ -25,10 +29,18 @@ namespace Gyak.Game
 
         private Mastermind(Settings settings)
         {
+            _stopwatch = new Stopwatch();
             _settings = settings;
-            _question = Question.Create(settings);
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            _question = Question.Create(_settings);
             _gameEnded = false;
-            CreateAvailableColors();
+			_rounds = [];
+			CreateAvailableColors();
+            _stopwatch.Restart();
         }
 
         public static Mastermind Create(Settings settings)
@@ -65,13 +77,11 @@ namespace Gyak.Game
 
             if (round.IsMatch())
             {
-                GameFinished?.Invoke(this, true);
-                _gameEnded = true;
+                StopGame(true);
             }
             else if (_rounds.Count == _settings.TriesNum)
             {
-                GameFinished?.Invoke(this, false);
-                _gameEnded = true;
+                StopGame(false);
             }
             else MessageReceived?.Invoke(this, "Hozzáadtál egy tippet.");
             
@@ -90,11 +100,14 @@ namespace Gyak.Game
         public void Configure(Settings settings)
         {
             _settings = settings;
-            CreateAvailableColors();
-            _rounds = [];
-            _selected = [];
-            _question = Question.Create(settings);
-            _gameEnded = false;
-        }
-    }
+            StartGame();
+		}
+
+        private void StopGame(bool winner) 
+        {
+            _stopwatch.Stop();
+			GameFinished?.Invoke(this, winner);
+			_gameEnded = true;
+		}
+	}
 }
