@@ -1,0 +1,29 @@
+﻿<EditForm OnValidSubmit=@FilterChangeHandler Model=@this>
+    <input type="date" @bind-value=_datum />
+    <select>
+        @foreach (var valute in _currencies)
+        {
+            <option value="@_valute">@valute</option>
+        }
+    </select>
+    <button type="submit">Keres</button>
+</EditForm>
+
+<p>@_responseBody</p>
+
+
+@code {
+    private List<string> _currencies = ["GBP", "AUD", "DKK", "JPY", "CAD", "NOK", "CHF", "SEK", "USD", "CZK", "PLN", "EUR", "HRK", "RON", "TRY"];
+    private DateOnly _datum;
+    private string _valute;
+    private HttpClient _httpClient = new();
+    private string _responseBody;
+
+    private async Task FilterChangeHandler() 
+    {
+        HttpResponseMessage response = await _httpClient.GetAsync($"http://api.napiarfolyam.hu?bank=kh&datum={_datum.ToString("yyyyMMdd")}&valutanem={_valute}");
+        //response.EnsureSuccessStatusCode();
+        _responseBody = await response.Content.ReadAsStringAsync();
+        StateHasChanged();
+    }
+}

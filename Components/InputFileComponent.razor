@@ -1,0 +1,35 @@
+﻿<EditForm OnValidSubmit="FileUploadHandler" Model=@this>
+    <InputFile OnChange="OnInputFileChange" />
+</EditForm>
+<select>
+    @foreach (var word in _fileContents)
+    {
+        <option>@word</option>
+    }
+</select>
+
+<p>Raw file content: @_fileContent</p>
+
+@code {
+    private string _fileContent;
+    private List<string> _fileContents = [];
+    
+    private async Task<List<string>> OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            _fileContents.Clear();
+            using (var stream = file.OpenReadStream())
+            using (var reader = new StreamReader(stream))
+            {
+                _fileContent = await reader.ReadToEndAsync();
+            }
+        }
+
+        return _fileContents = Regex.Split(_fileContent, @"[\s,;]+").ToList();
+    }
+
+    private void FileUploadHandler(){}
+}

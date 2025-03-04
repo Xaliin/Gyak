@@ -10,6 +10,6 @@ HF:
 -új komponens: async módon file olvasás, blazor-ben megjelenítés
 -> meg lehessen adni, melyik filet olvassa be
 -felolvasott file soraiból készítsünk <select> ill. <listbox> elemeket
--szövegesen gyűjtsük be az aktuális időjárást valamelyik internetes szolgáltatótól (async)
+-szövegesen gyűjtsük be az aktuális időjárást valamelyik internetes szolgáltatótól (async)  https://www.idokep.hu/thirdparty
     v./& 
 -paraméterként megadni dátumot, pénznemet -> adott napon érvényes árfolyamának lekérdezése
