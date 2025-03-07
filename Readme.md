@@ -12,4 +12,4 @@ HF:
 -felolvasott file soraiból készítsünk <select> ill. <listbox> elemeket
 -szövegesen gyűjtsük be az aktuális időjárást valamelyik internetes szolgáltatótól (async)  https://www.idokep.hu/thirdparty
     v./& 
--paraméterként megadni dátumot, pénznemet -> adott napon érvényes árfolyamának lekérdezése
+-paraméterként megadni dátumot, pénznemet -> adott napon érvényes árfolyamának lekérdezése  https://www.napiarfolyam.hu/api, https://github.com/fawazahmed0/exchange-api?tab=readme-ov-file (1 évre visszanyúlóan)

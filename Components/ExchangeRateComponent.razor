@@ -1,29 +1,40 @@
 ﻿<EditForm OnValidSubmit=@FilterChangeHandler Model=@this>
     <input type="date" @bind-value=_datum />
-    <select>
-        @foreach (var valute in _currencies)
+    <select @bind=_valuta>
+        @foreach (var valuta in _currencies)
         {
-            <option value="@_valute">@valute</option>
+            <option value="@valuta">@valuta</option>
         }
     </select>
     <button type="submit">Keres</button>
 </EditForm>
 
-<p>@_responseBody</p>
+<p>@_result</p>
 
 
 @code {
     private List<string> _currencies = ["GBP", "AUD", "DKK", "JPY", "CAD", "NOK", "CHF", "SEK", "USD", "CZK", "PLN", "EUR", "HRK", "RON", "TRY"];
     private DateOnly _datum;
-    private string _valute;
+    private string _valuta = "GBP";
     private HttpClient _httpClient = new();
-    private string _responseBody;
+    private string _response;
+    private JsonDocument _jsonDocument;
+    private double _result;
 
     private async Task FilterChangeHandler() 
     {
-        HttpResponseMessage response = await _httpClient.GetAsync($"http://api.napiarfolyam.hu?bank=kh&datum={_datum.ToString("yyyyMMdd")}&valutanem={_valute}");
+        //HttpResponseMessage response = await _httpClient.GetAsync($"http://api.napiarfolyam.hu?bank=kh&datum={_datum.ToString("yyyyMMdd")}&valuta={_valuta.ToLower()}");
         //response.EnsureSuccessStatusCode();
-        _responseBody = await response.Content.ReadAsStringAsync();
+        //_responseBody = await response.Content.ReadAsStringAsync();
+
+        _response = await _httpClient.GetStringAsync($"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{_datum.ToString("yyyy-MM-dd")}/v1/currencies/{_valuta.ToLower()}.json");
+        _jsonDocument = JsonDocument.Parse(_response);
+
+        if (_jsonDocument.RootElement.GetProperty(_valuta.ToLower()).TryGetProperty("huf", out JsonElement value))
+        {
+            _result = value.GetDouble();
+        }
+
         StateHasChanged();
     }
 }
