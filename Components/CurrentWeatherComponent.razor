@@ -1,0 +1,23 @@
+﻿<h2>IDŐJÁRÁS LEKÉRDEZÉS</h2>
+
+<p>@_result</p>
+
+@code {
+    private string _response = "";
+    private HttpClient _httpClient = new();
+    private string _result = "";
+    private JsonNode _weatherData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _result = await GetCurrentWeather();
+    }
+
+    public async Task<string> GetCurrentWeather()
+    {
+        _response = await _httpClient.GetStringAsync($"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Budapest?unitGroup=metric&include=current&key=QTSMGZ2ZFPPXV38RSCPYEQY53&contentType=json");
+        _weatherData = JsonNode.Parse(_response);
+
+        return _weatherData["days"][0]["description"].ToString();
+    }
+}

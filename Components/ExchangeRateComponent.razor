@@ -1,4 +1,5 @@
-﻿<EditForm OnValidSubmit=@FilterChangeHandler Model=@this>
+﻿<h2>ÁRFOLYAM LEKÉRDEZÉS</h2>
+<EditForm OnValidSubmit=@FilterChangeHandler Model=@this>
     <input type="date" @bind-value=_datum />
     <select @bind=_valuta>
         @foreach (var valuta in _currencies)
@@ -8,6 +9,7 @@
     </select>
     <button type="submit">Keres</button>
 </EditForm>
+
 
 <p>@_result</p>
 
@@ -20,6 +22,7 @@
     private string _response;
     private JsonDocument _jsonDocument;
     private double _result;
+
 
     private async Task FilterChangeHandler() 
     {
